@@ -43,11 +43,12 @@ ATornadoPawn::ATornadoPawn()
     // Collision Sphere for Detecting Physics Objects
     TornadoCollision = CreateDefaultSubobject<USphereComponent>(TEXT("TornadoCollision"));
     TornadoCollision->SetupAttachment(RootComponent);
-    TornadoCollision->SetSphereRadius(300.0f);
+    TornadoCollision->SetSphereRadius(200.0f);
     TornadoCollision->SetCollisionEnabled(ECollisionEnabled::QueryOnly);
     TornadoCollision->SetCollisionObjectType(ECC_Pawn);
     TornadoCollision->SetCollisionResponseToAllChannels(ECR_Ignore);
     TornadoCollision->SetCollisionResponseToChannel(ECC_PhysicsBody, ECR_Overlap);
+    NearMissDistance = (100.0f +  TornadoCollision->GetScaledSphereRadius());
 }
 
 // =================== LIFECYCLE METHODS ===================
@@ -197,7 +198,7 @@ void ATornadoPawn::StartBoost()
 void ATornadoPawn::AffectNearbyObjects()
 {
     FVector TornadoLocation = GetActorLocation();
-    float TornadoStrength = 2000.0f;
+    TornadoStrength *= CurrentSize; //scale strength w/ size
 
     TArray<AActor*> OverlappingActors;
     TornadoCollision->GetOverlappingActors(OverlappingActors, ATornadoPhysicsObject::StaticClass());
@@ -209,11 +210,42 @@ void ATornadoPawn::AffectNearbyObjects()
         ATornadoPhysicsObject* PhysicsObject = Cast<ATornadoPhysicsObject>(Actor);
         if (PhysicsObject)
         {
-            UE_LOG(LogTemp, Warning, TEXT("Applying force to %s"), *PhysicsObject->GetName());
             PhysicsObject->ApplyTornadoForce(TornadoLocation, TornadoStrength);
+            ObjectsHit++;
+            if (ObjectsHit >= GrowthThreshold)
+            {
+                GrowTornado();
+                ObjectsHit = 0; // reset counter
+            }
+            UE_LOG(LogTemp, Warning, TEXT("Applying force to %s"), *PhysicsObject->GetName());
+            
         }
         DetectNearMiss(PhysicsObject);
     }
+}
+
+// Growth System
+
+void ATornadoPawn::GrowTornado()
+{
+    if (CurrentSize >= MaxSize)
+    {
+        UE_LOG(LogTemp, Warning, TEXT("Tornado has reached max size"));
+        return;
+    }
+    CurrentSize *= GrowthMultiplier;
+    TornadoMesh->SetWorldScale3D(FVector(CurrentSize));
+
+    float NewCollisionRadius = TornadoCollision->GetUnscaledSphereRadius() * GrowthMultiplier;
+    TornadoCollision->SetSphereRadius(NewCollisionRadius);
+
+    MovementComponent->MaxSpeed *= 0.9f;
+    MovementComponent->Acceleration *= 0.85f;
+
+    DriftFactor *= 1.1f;
+    
+    UE_LOG(LogTemp, Warning, TEXT("Tornado grew! New size: %f"), CurrentSize);
+
 }
 
 // =================== SCORING SYSTEM ===================
@@ -222,9 +254,58 @@ void ATornadoPawn::DetectNearMiss(AActor* Object)
 {
     float Distance = FVector::Dist(Object->GetActorLocation(), GetActorLocation());
 
-    if (Distance < 200.0f) 
+    if (Distance < NearMissDistance) 
     {
         NearMissBonus += 50.0f;
         UE_LOG(LogTemp, Warning, TEXT("Near miss with %s! +50 points"), *Object->GetName());
     }
+}
+
+void ATornadoPawn::SetGrowthSettings(float NewMultiplier, float NewThreshold, float NewMaxSize)
+{
+    GrowthMultiplier = NewMultiplier;
+    GrowthThreshold = FMath::Max(1.0f, NewThreshold); // Prevents division by zero
+    MaxSize = NewMaxSize;
+
+    UE_LOG(LogTemp, Warning, TEXT("Growth Settings Updated: Multiplier = %f, Threshold = %f, Max Size = %f"), 
+        GrowthMultiplier, static_cast<float>(GrowthThreshold), MaxSize);
+}
+
+void ATornadoPawn::SetBoostSettings(float NewMultiplier, float NewDuration, float NewCooldown)
+{
+    BoostMultiplier = NewMultiplier;
+    BoostDuration = NewDuration;
+    BoostCooldown = NewCooldown;
+    UE_LOG(LogTemp, Warning, TEXT("Boost Settings Updated: Multiplier = %f, Duration = %f, Cooldown = %f"), BoostMultiplier, BoostDuration, BoostCooldown);
+}
+
+void ATornadoPawn::SetTornadoStrength(float NewStrength, float NewCollisionRadius, float NewNearMissDistance)
+{
+    TornadoStrength = NewStrength;
+    TornadoCollision->SetSphereRadius(NewCollisionRadius);
+
+    if (NewNearMissDistance < 0)
+    {
+        NearMissDistance = NewCollisionRadius + 100;
+    }
+    else
+    {
+        NearMissDistance = NewNearMissDistance;
+    }
+    UE_LOG(LogTemp, Warning, TEXT("Tornado Strength Updated: Strength = %f, Collision Radius = %f, Near Miss Distance = %f"),
+       TornadoStrength, NewCollisionRadius, NearMissDistance);
+}
+
+void ATornadoPawn::SetTornadoMovement(float NewMaxSpeed, float NewAcceleration, float NewDeceleration,
+    float NewTurningBoost, float NewFriction, float NewDriftFactor)
+{
+    MovementComponent->MaxSpeed = NewMaxSpeed;
+    MovementComponent->Acceleration = NewAcceleration;
+    MovementComponent->Deceleration = NewDeceleration;
+    MovementComponent->TurningBoost = NewTurningBoost;
+    Friction = NewFriction;
+    DriftFactor = NewDriftFactor;
+    
+    UE_LOG(LogTemp, Warning, TEXT("Tornado Movement Updated: MaxSpeed = %f, Acceleration = %f, Deceleration = %f, TurningBoost = %f, Friction = %f, DriftFactor = %f"),
+       NewMaxSpeed, NewAcceleration, NewDeceleration, NewTurningBoost, NewFriction, NewDriftFactor);
 }

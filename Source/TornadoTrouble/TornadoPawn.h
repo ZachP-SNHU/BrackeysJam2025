@@ -32,6 +32,7 @@ public:
 	void ApplyDrift(float DeltaTime);
 	void StartBoost();
 	void AffectNearbyObjects();
+	void GrowTornado();
 	void DetectNearMiss(AActor* Object);
 
 	// =================== COMPONENTS ===================
@@ -75,21 +76,46 @@ public:
 	FVector MoveDirection;
 	FVector CurrentVelocity;
 
+	// Strength
+	
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Tornado Properties")
+	float TornadoStrength = 1000.0f;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Tornado Properties")
+	float NearMissDistance;
+
 	// =================== BOOST PROPERTIES ===================
-	UPROPERTY(EditAnywhere, Category="Boost")
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Boost")
 	float BoostMultiplier = 2.0f;
 	
-	UPROPERTY(EditAnywhere, Category="Boost")
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Boost")
 	float BoostDuration = 2.0f;
 
-	UPROPERTY(EditAnywhere, Category="Boost")
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Boost")
 	float BoostCooldown = 3.0f;
 
 	bool bIsBoosting = false;
 	bool bCanBoost = true;
 	float BoostEndTime = 0.0f;
 	float NextBoostTime = 0.0f;
+	
+	// Growth System
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Growth")
+	int GrowthThreshold = 1;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Growth")
+	float GrowthMultiplier = 1.05f; // 5% growth
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Growth")
+	float MaxSize = 3.0f;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Growth")
+	int ObjectsHit = 0;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Growth")
+	float CurrentSize = 1.0f;
+	
 	// =================== JUMP & INPUT TRACKING ===================
 	bool bIsJumping;
 	bool bHasMoved = false; // Wait for player to make an input
@@ -105,4 +131,19 @@ public:
 	float NearMissBonus = 0.0f;
 
 	float StartTime;
+
+	// Blueprint callable functions
+
+	UFUNCTION(BlueprintCallable, Category="Growth")
+	void SetGrowthSettings(float NewMultiplier, float NewThreshold, float NewMaxSize);
+
+	UFUNCTION(BlueprintCallable, Category="Boost")
+	void SetBoostSettings(float NewMultiplier, float NewDuration, float NewCooldown);
+
+	UFUNCTION(BlueprintCallable, Category="Tornado Strength")
+	void SetTornadoStrength(float NewStrength, float NewCollisionRadius, float NewNearMissDistance = -1.0f);
+
+	UFUNCTION(BlueprintCallable, Category="Tornado Movement")
+	void SetTornadoMovement(float NewMaxSpeed, float NewAcceleration, float NewDeceleration, float NewTurningBoost, float NewFriction, float NewDriftFactor);
+	
 };
