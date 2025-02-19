@@ -13,12 +13,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="c6817037-fc48-479b-9503-40c35ede15bc" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.TornadoTrouble/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.TornadoTrouble/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Character/Tornado_BP.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Character/Tornado_BP.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Levels/TestLevel.umap" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Levels/TestLevel.umap" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/ZachWorkingFiles/TestTornado_BP.uasset" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/Source/TornadoTrouble/TornadoPawn.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/TornadoTrouble/TornadoPawn.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/TornadoTrouble/TornadoPawn.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/TornadoTrouble/TornadoPawn.h" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -174,7 +169,7 @@
       <workItem from="1739751442266" duration="12634000" />
       <workItem from="1739840402998" duration="7877000" />
       <workItem from="1739939395030" duration="1541000" />
-      <workItem from="1739941077331" duration="626000" />
+      <workItem from="1739941077331" duration="840000" />
     </task>
     <servers />
   </component>

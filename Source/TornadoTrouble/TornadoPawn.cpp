@@ -267,14 +267,14 @@ void ATornadoPawn::GrowTornado()
     {
         bCanGrow = false;
 
-        // 🌀 Update target values for smooth interpolation
+        // Update target values for smooth interpolation
         TargetSize = CurrentSize * GrowthMultiplier;
         TargetMaxSpeed = MovementComponent->MaxSpeed * 0.9f;  // Reduce speed by 10%
         TargetAcceleration = MovementComponent->Acceleration * 0.85f; // Reduce acceleration by 15%
         TargetDrift = DriftFactor * 1.1f; // Increase drift by 10%
         TargetCollisionRadius = TornadoCollision->GetUnscaledSphereRadius() * GrowthMultiplier;
 
-        // 🌟 0.7-second delay before allowing next growth
+        // 0.7-second delay before allowing next growth
         GetWorld()->GetTimerManager().SetTimer(GrowthTimerHandle, [this]()
         {
             bCanGrow = true;
