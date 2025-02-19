@@ -101,6 +101,12 @@ public:
 	
 	// Growth System
 
+	float TargetSize = 1.0f;
+	float TargetMaxSpeed;
+	float TargetAcceleration;
+	float TargetDrift;
+	float TargetCollisionRadius;
+
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Growth")
 	int GrowthThreshold = 1;
 

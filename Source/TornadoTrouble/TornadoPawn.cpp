@@ -15,16 +15,24 @@ ATornadoPawn::ATornadoPawn()
 {
     PrimaryActorTick.bCanEverTick = true;
 
+    // Collision Sphere for Detecting Physics Objects
+    TornadoCollision = CreateDefaultSubobject<USphereComponent>(TEXT("TornadoCollision"));
+    RootComponent = TornadoCollision;
+    TornadoCollision->SetSphereRadius(200.0f);
+    TornadoCollision->SetCollisionEnabled(ECollisionEnabled::QueryAndPhysics);
+    TornadoCollision->SetCollisionObjectType(ECC_Pawn);
+    TornadoCollision->SetCollisionResponseToAllChannels(ECR_Block);  // Block everything by default
+    TornadoCollision->SetCollisionResponseToChannel(ECC_PhysicsBody, ECR_Overlap);  // Overlap physics objects
+    TornadoCollision->SetCollisionResponseToChannel(ECC_Visibility, ECR_Ignore);
+    
     // Tornado Mesh (Skeletal)
     TornadoMesh = CreateDefaultSubobject<USkeletalMeshComponent>("TornadoMesh");
-    RootComponent = TornadoMesh;
-    TornadoMesh->SetSimulatePhysics(true);
-    TornadoMesh->SetCollisionEnabled(ECollisionEnabled::QueryAndPhysics);
-    TornadoMesh->SetCollisionObjectType(ECC_Pawn);
+    TornadoMesh->SetupAttachment(TornadoCollision);
+    TornadoMesh->SetCollisionEnabled(ECollisionEnabled::NoCollision);
 
     // REMOVE AFTER SKELETAL MESH IMPLEMENTATION
     TestMesh = CreateDefaultSubobject<UStaticMeshComponent>("TestMesh");
-    TestMesh->SetupAttachment(TornadoMesh);
+    TestMesh->SetupAttachment(TornadoCollision);
 
     // Movement
     MovementComponent = CreateDefaultSubobject<UFloatingPawnMovement>(TEXT("MovementComponent"));
@@ -39,16 +47,7 @@ ATornadoPawn::ATornadoPawn()
 
     Camera = CreateDefaultSubobject<UCameraComponent>(TEXT("Camera"));
     Camera->SetupAttachment(SpringArm);
-
-    // Collision Sphere for Detecting Physics Objects
-    TornadoCollision = CreateDefaultSubobject<USphereComponent>(TEXT("TornadoCollision"));
-    TornadoCollision->SetupAttachment(RootComponent);
-    TornadoCollision->SetSphereRadius(200.0f);
-    TornadoCollision->SetCollisionEnabled(ECollisionEnabled::QueryOnly);
-    TornadoCollision->SetCollisionObjectType(ECC_Pawn);
-    TornadoCollision->SetCollisionResponseToAllChannels(ECR_Ignore);
-    TornadoCollision->SetCollisionResponseToChannel(ECC_PhysicsBody, ECR_Overlap);
-    NearMissDistance = (100.0f +  TornadoCollision->GetScaledSphereRadius());
+    
 }
 
 // =================== LIFECYCLE METHODS ===================
@@ -57,11 +56,34 @@ void ATornadoPawn::BeginPlay()
 {
     Super::BeginPlay();
     StartTime = GetWorld()->GetTimeSeconds();
+
+    // Set initial targets to current values
+    TargetSize = CurrentSize;
+    TargetMaxSpeed = MovementComponent->MaxSpeed;
+    TargetAcceleration = MovementComponent->Acceleration;
+    TargetDrift = DriftFactor;
+    TargetCollisionRadius = TornadoCollision->GetUnscaledSphereRadius();
+    
 }
 
 void ATornadoPawn::Tick(float DeltaTime)
 {
     Super::Tick(DeltaTime);
+
+    FVector NewScale = FMath::VInterpTo(GetActorScale3D(), FVector(TargetSize), DeltaTime, 3.0f);
+    SetActorScale3D(NewScale);
+    CurrentSize = NewScale.X;
+
+    // 💨 Smoothly interpolate speed & acceleration
+    MovementComponent->MaxSpeed = FMath::FInterpTo(MovementComponent->MaxSpeed, TargetMaxSpeed, DeltaTime, 3.0f);
+    MovementComponent->Acceleration = FMath::FInterpTo(MovementComponent->Acceleration, TargetAcceleration, DeltaTime, 3.0f);
+
+    // 🌬️ Smoothly interpolate drift factor
+    DriftFactor = FMath::FInterpTo(DriftFactor, TargetDrift, DeltaTime, 3.0f);
+
+    // 🎯 Smoothly adjust collision radius
+    float NewRadius = FMath::FInterpTo(TornadoCollision->GetScaledSphereRadius(), TargetCollisionRadius, DeltaTime, 3.0f);
+    TornadoCollision->SetSphereRadius(NewRadius);
 
     // Debug Log for Score Tracking
     UE_LOG(LogTemp, Warning, TEXT("Time Score: %f, Destruction Score: %f, Near Miss Bonus: %f"),
@@ -82,6 +104,16 @@ void ATornadoPawn::Tick(float DeltaTime)
 
     ApplyDrift(DeltaTime);
     AddMovementInput(CurrentVelocity.GetSafeNormal(), 1.0f);
+
+    FHitResult HitResult;
+    AddActorWorldOffset(CurrentVelocity * DeltaTime, true, &HitResult);
+
+    if (HitResult.IsValidBlockingHit())
+    {
+        UE_LOG(LogTemp, Warning, TEXT("Blocked by: %s"), *HitResult.GetActor()->GetName());
+        CurrentVelocity = FVector::ZeroVector;  // Stop on collision
+    }
+    DrawDebugSphere(GetWorld(), GetActorLocation(), TornadoCollision->GetScaledSphereRadius(), 32, FColor::Red, false, -1.0f, 0, 2.0f);
 
     // Camera Adjustment
     FVector TornadoRight = GetActorRightVector();
@@ -226,27 +258,33 @@ void ATornadoPawn::AffectNearbyObjects()
 
 // Growth System
 
+FTimerHandle GrowthTimerHandle;
+bool bCanGrow = true;
+
 void ATornadoPawn::GrowTornado()
 {
-    if (CurrentSize >= MaxSize)
+    if (bCanGrow && CurrentSize < MaxSize)
     {
-        UE_LOG(LogTemp, Warning, TEXT("Tornado has reached max size"));
-        return;
+        bCanGrow = false;
+
+        // 🌀 Update target values for smooth interpolation
+        TargetSize = CurrentSize * GrowthMultiplier;
+        TargetMaxSpeed = MovementComponent->MaxSpeed * 0.9f;  // Reduce speed by 10%
+        TargetAcceleration = MovementComponent->Acceleration * 0.85f; // Reduce acceleration by 15%
+        TargetDrift = DriftFactor * 1.1f; // Increase drift by 10%
+        TargetCollisionRadius = TornadoCollision->GetUnscaledSphereRadius() * GrowthMultiplier;
+
+        // 🌟 0.7-second delay before allowing next growth
+        GetWorld()->GetTimerManager().SetTimer(GrowthTimerHandle, [this]()
+        {
+            bCanGrow = true;
+        }, 0.7f, false);
+
+        UE_LOG(LogTemp, Warning, TEXT("Growth triggered: TargetSize=%f, TargetMaxSpeed=%f, TargetDrift=%f"), 
+            TargetSize, TargetMaxSpeed, TargetDrift);
     }
-    CurrentSize *= GrowthMultiplier;
-    TornadoMesh->SetWorldScale3D(FVector(CurrentSize));
-
-    float NewCollisionRadius = TornadoCollision->GetUnscaledSphereRadius() * GrowthMultiplier;
-    TornadoCollision->SetSphereRadius(NewCollisionRadius);
-
-    MovementComponent->MaxSpeed *= 0.9f;
-    MovementComponent->Acceleration *= 0.85f;
-
-    DriftFactor *= 1.1f;
-    
-    UE_LOG(LogTemp, Warning, TEXT("Tornado grew! New size: %f"), CurrentSize);
-
 }
+
 
 // =================== SCORING SYSTEM ===================
 
