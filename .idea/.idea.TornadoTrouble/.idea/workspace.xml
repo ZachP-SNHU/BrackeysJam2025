@@ -13,10 +13,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c6817037-fc48-479b-9503-40c35ede15bc" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/Content/Levels/TestLevel.umap" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Levels/TestLevel.umap" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/ZachWorkingFiles/LevelExit_BP.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/ZachWorkingFiles/LevelExit_BP.uasset" afterDir="false" />
-    </list>
+    <list default="true" id="c6817037-fc48-479b-9503-40c35ede15bc" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -184,6 +181,7 @@
       <workItem from="1740001651831" duration="7633000" />
       <workItem from="1740024973272" duration="2941000" />
       <workItem from="1740028797706" duration="597000" />
+      <workItem from="1740087834343" duration="417000" />
     </task>
     <servers />
   </component>
