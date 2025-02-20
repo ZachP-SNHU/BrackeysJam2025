@@ -72,25 +72,23 @@ void ATornadoPawn::Tick(float DeltaTime)
     SetActorScale3D(NewScale);
     CurrentSize = NewScale.X;
 
-    // Smoothly interpolate speed & acceleration
+    if (FMath::IsNearlyEqual(CurrentSize, TargetSize, 0.01f))
+    {
+        CurrentSize = TargetSize;  // Snap to target size to prevent float issues
+        SetActorScale3D(FVector(TargetSize));  // Ensure visual scale is exact
+        UE_LOG(LogTemp, Warning, TEXT("Growth interpolation complete at size: %f"), CurrentSize);
+    }
+
+
+    // Smoothly interpolate movement properties
     MovementComponent->MaxSpeed = FMath::FInterpTo(MovementComponent->MaxSpeed, TargetMaxSpeed, DeltaTime, 3.0f);
     MovementComponent->Acceleration = FMath::FInterpTo(MovementComponent->Acceleration, TargetAcceleration, DeltaTime, 3.0f);
-
-    // Smoothly interpolate drift factor
     DriftFactor = FMath::FInterpTo(DriftFactor, TargetDrift, DeltaTime, 3.0f);
 
     //  Smoothly adjust collision radius
-    float NewRadius = FMath::FInterpTo(TornadoCollision->GetScaledSphereRadius(), TargetCollisionRadius, DeltaTime, 3.0f);
-    TornadoCollision->SetSphereRadius(NewRadius);
-
-    // Debug Log for Score Tracking
-    UE_LOG(LogTemp, Warning, TEXT("Time Score: %f, Destruction Score: %f, Near Miss Bonus: %f"),
-        TimeScore, DestructionScore, NearMissBonus);
-
-    // Time Score Calculation
-    TimeScore = 10000.0f - ((GetWorld()->GetTimeSeconds() - StartTime) * 10.0f);
-    TimeScore = FMath::Max(TimeScore, 0.0f);
-
+   // float NewRadius = FMath::FInterpTo(TornadoCollision->GetScaledSphereRadius(), TargetCollisionRadius, DeltaTime, 3.0f);
+   // TornadoCollision->SetSphereRadius(NewRadius);
+    
     // Boost Logic
     float CurrentTime = GetWorld()->GetTimeSeconds();
     if (bIsBoosting && CurrentTime >= BoostEndTime)
@@ -133,6 +131,10 @@ void ATornadoPawn::Tick(float DeltaTime)
         DeltaTime,
         CameraFollowSpeed
     );
+
+    // Time Score Calculation
+    TimeScore = 10000.0f - ((GetWorld()->GetTimeSeconds() - StartTime) * 10.0f);
+    TimeScore = FMath::Max(TimeScore, 0.0f);
 
     SpringArm->SetRelativeRotation(SmoothedRotation);
 
@@ -225,44 +227,6 @@ void ATornadoPawn::StartBoost()
     }
 }
 
-// physics interactions
-
-void ATornadoPawn::AffectNearbyObjects()
-{
-    FVector TornadoLocation = GetActorLocation();
-    //TornadoStrength *= CurrentSize; //scale strength w/ size
-
-    TArray<AActor*> OverlappingActors;
-    TornadoCollision->GetOverlappingActors(OverlappingActors, ATornadoPhysicsObject::StaticClass());
-    
-    UE_LOG(LogTemp, Warning, TEXT("Found %d objects near tornado"), OverlappingActors.Num());
-
-    for (AActor* Actor : OverlappingActors)
-    {
-        ATornadoPhysicsObject* PhysicsObject = Cast<ATornadoPhysicsObject>(Actor);
-        if (PhysicsObject)
-        {
-            PhysicsObject->ApplyTornadoForce(TornadoLocation, TornadoStrength);
-            if (PhysicsObject->bCausesGrowth &&  !PhysicsObject->HasBeenCounted())
-            {
-                ObjectsHit++;
-                PhysicsObject->SetHasBeenCounted();
-                
-                if (ObjectsHit >= GrowthThreshold)
-                {
-                    GrowTornado();
-                    ObjectsHit = 0; // reset counter
-                }
-            }
-            
-            UE_LOG(LogTemp, Warning, TEXT("Applying force to %s"), *PhysicsObject->GetName());
-        }
-        
-        DetectNearMiss(PhysicsObject);
-        
-    }
-}
-
 // Growth System
 
 FTimerHandle GrowthTimerHandle;
@@ -292,6 +256,46 @@ void ATornadoPawn::GrowTornado()
     }
 }
 
+// physics interactions
+
+void ATornadoPawn::AffectNearbyObjects()
+{
+    FVector TornadoLocation = GetActorLocation();
+    //TornadoStrength *= CurrentSize; //scale strength w/ size
+
+    TArray<AActor*> OverlappingActors;
+    TornadoCollision->GetOverlappingActors(OverlappingActors, ATornadoPhysicsObject::StaticClass());
+    
+    UE_LOG(LogTemp, Warning, TEXT("Found %d objects near tornado"), OverlappingActors.Num());
+
+    for (AActor* Actor : OverlappingActors)
+    {
+        ATornadoPhysicsObject* PhysicsObject = Cast<ATornadoPhysicsObject>(Actor);
+        if (PhysicsObject)
+        {
+            PhysicsObject->ApplyTornadoForce(TornadoLocation, TornadoStrength);
+
+            if (PhysicsObject->bCausesGrowth && !PhysicsObject->HasBeenCounted() && bCanGrow && CurrentSize < MaxSize)
+            {
+                ObjectsHit++;
+                PhysicsObject->SetHasBeenCounted();
+                UE_LOG(LogTemp, Warning, TEXT("Growth Object Hit Count: %d / %d"), ObjectsHit, GrowthThreshold);
+
+                if (ObjectsHit >= GrowthThreshold)
+                {
+                    GrowTornado();
+                    ObjectsHit = 0; // Reset counter after growth attempt
+                }
+            }
+            
+            UE_LOG(LogTemp, Warning, TEXT("Applying force to %s"), *PhysicsObject->GetName());
+        }
+
+        
+        DetectNearMiss(PhysicsObject);
+        
+    }
+}
 
 // Scoring System
 
