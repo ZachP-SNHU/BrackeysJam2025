@@ -5,6 +5,7 @@
     <projectFile profileName="EpicGames.AspNet">../../../../../../../Program Files/Epic Games/UE_5.4/Engine/Source/Programs/Shared/EpicGames.AspNet/EpicGames.AspNet.csproj</projectFile>
     <projectFile kind="Docker">../../../../../../../Program Files/Epic Games/UE_5.4/Engine/Source/Programs/Shared/EpicGames.Perforce.Fixture/EpicGames.Perforce.Fixture.csproj</projectFile>
     <projectFile>../../../../../../../Program Files/Epic Games/UE_5.4/Engine/Source/Programs/UnrealBuildTool/UnrealBuildTool.csproj</projectFile>
+    <projectFile kind="Docker">../../../Program Files/Epic Games/UE_5.4/Engine/Source/Programs/Shared/EpicGames.Perforce.Fixture/EpicGames.Perforce.Fixture.csproj</projectFile>
     <projectFile>Intermediate/ProjectFiles/TornadoTrouble.vcxproj</projectFile>
     <projectFile>Intermediate/ProjectFiles/UE5.vcxproj</projectFile>
   </component>
@@ -13,7 +14,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="c6817037-fc48-479b-9503-40c35ede15bc" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.TornadoTrouble/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.TornadoTrouble/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Character/Tornado_BP.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Character/Tornado_BP.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Levels/TestLevel.umap" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Levels/TestLevel.umap" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Objects/Mesh/Paper_Mesh.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Objects/Mesh/Paper_Mesh.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Objects/Paper_BP.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Objects/Paper_BP.uasset" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Source/TornadoTrouble/TornadoPawn.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/TornadoTrouble/TornadoPawn.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/TornadoTrouble/TornadoPhysicsObject.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/TornadoTrouble/TornadoPhysicsObject.h" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -137,6 +144,17 @@
         <option name="Build" />
       </method>
     </configuration>
+    <configuration name="EpicGames.Perforce.Fixture/Dockerfile (1)" type="docker-deploy" factoryName="dockerfile" server-name="Docker">
+      <deployment type="dockerfile">
+        <settings>
+          <option name="containerName" value="epicgames.perforce.fixture" />
+          <option name="contextFolderPath" value="C:\GameDev\GameJams\BrackeysJam2025" />
+          <option name="sourceFilePath" value="../../../Program Files/Epic Games/UE_5.4/Engine/Source/Programs/Shared/EpicGames.Perforce.Fixture/Dockerfile" />
+        </settings>
+      </deployment>
+      <EXTENSION ID="com.jetbrains.rider.docker.debug" isFastModeEnabled="true" isSslEnabled="false" />
+      <method v="2" />
+    </configuration>
     <configuration name="EpicGames.Perforce.Fixture/Dockerfile" type="docker-deploy" factoryName="dockerfile" server-name="Docker">
       <deployment type="dockerfile">
         <settings>
@@ -170,6 +188,7 @@
       <workItem from="1739840402998" duration="7877000" />
       <workItem from="1739939395030" duration="1541000" />
       <workItem from="1739941077331" duration="840000" />
+      <workItem from="1740001651831" duration="7633000" />
     </task>
     <servers />
   </component>

@@ -27,6 +27,16 @@ public:
 	class UStaticMeshComponent* ObjectMesh;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Physics Properties")
+	bool bCausesGrowth = true;
+
+	bool HasBeenCounted() const
+	{
+		return bHasbeenCounted;
+	}
+
+	void SetHasBeenCounted() { bHasbeenCounted = true; }
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Physics Properties")
 	float LiftForce = 500.0f;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Physics Properties")
@@ -45,5 +55,8 @@ public:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Scoring")
 	float OutOfBoundsHeight = -1000.0f;
-	
+
+
+private:
+	bool bHasbeenCounted;
 };

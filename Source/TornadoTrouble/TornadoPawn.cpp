@@ -9,7 +9,7 @@
 #include "Components/SkeletalMeshComponent.h"
 #include "Components/StaticMeshComponent.h"
 
-// =================== CONSTRUCTOR ===================
+// THIS is the constructor vvvvv
 
 ATornadoPawn::ATornadoPawn()
 {
@@ -18,14 +18,14 @@ ATornadoPawn::ATornadoPawn()
     // Collision Sphere for Detecting Physics Objects
     TornadoCollision = CreateDefaultSubobject<USphereComponent>(TEXT("TornadoCollision"));
     RootComponent = TornadoCollision;
-    TornadoCollision->SetSphereRadius(200.0f);
+    TornadoCollision->SetSphereRadius(150.0f);
     TornadoCollision->SetCollisionEnabled(ECollisionEnabled::QueryAndPhysics);
     TornadoCollision->SetCollisionObjectType(ECC_Pawn);
     TornadoCollision->SetCollisionResponseToAllChannels(ECR_Block);  // Block everything by default
     TornadoCollision->SetCollisionResponseToChannel(ECC_PhysicsBody, ECR_Overlap);  // Overlap physics objects
     TornadoCollision->SetCollisionResponseToChannel(ECC_Visibility, ECR_Ignore);
     
-    // Tornado Mesh (Skeletal)
+    // skele mesh
     TornadoMesh = CreateDefaultSubobject<USkeletalMeshComponent>("TornadoMesh");
     TornadoMesh->SetupAttachment(TornadoCollision);
     TornadoMesh->SetCollisionEnabled(ECollisionEnabled::NoCollision);
@@ -50,8 +50,6 @@ ATornadoPawn::ATornadoPawn()
     
 }
 
-// =================== LIFECYCLE METHODS ===================
-
 void ATornadoPawn::BeginPlay()
 {
     Super::BeginPlay();
@@ -74,14 +72,14 @@ void ATornadoPawn::Tick(float DeltaTime)
     SetActorScale3D(NewScale);
     CurrentSize = NewScale.X;
 
-    // 💨 Smoothly interpolate speed & acceleration
+    // Smoothly interpolate speed & acceleration
     MovementComponent->MaxSpeed = FMath::FInterpTo(MovementComponent->MaxSpeed, TargetMaxSpeed, DeltaTime, 3.0f);
     MovementComponent->Acceleration = FMath::FInterpTo(MovementComponent->Acceleration, TargetAcceleration, DeltaTime, 3.0f);
 
-    // 🌬️ Smoothly interpolate drift factor
+    // Smoothly interpolate drift factor
     DriftFactor = FMath::FInterpTo(DriftFactor, TargetDrift, DeltaTime, 3.0f);
 
-    // 🎯 Smoothly adjust collision radius
+    //  Smoothly adjust collision radius
     float NewRadius = FMath::FInterpTo(TornadoCollision->GetScaledSphereRadius(), TargetCollisionRadius, DeltaTime, 3.0f);
     TornadoCollision->SetSphereRadius(NewRadius);
 
@@ -141,7 +139,7 @@ void ATornadoPawn::Tick(float DeltaTime)
     AffectNearbyObjects();
 }
 
-// =================== INPUT HANDLING ===================
+// Input Handling
 
 void ATornadoPawn::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 {
@@ -168,7 +166,7 @@ void ATornadoPawn::MoveRight(float Value)
     MoveDirection.Y = Value;
 }
 
-// =================== MOVEMENT MECHANICS ===================
+// Movement System
 
 void ATornadoPawn::ApplyDrift(float DeltaTime)
 {
@@ -213,6 +211,8 @@ void ATornadoPawn::ApplyDrift(float DeltaTime)
     CurrentVelocity += DriftOffset;
 }
 
+// boost system
+
 void ATornadoPawn::StartBoost()
 {
     float CurrentTime = GetWorld()->GetTimeSeconds();
@@ -225,12 +225,12 @@ void ATornadoPawn::StartBoost()
     }
 }
 
-// =================== PHYSICS INTERACTIONS ===================
+// physics interactions
 
 void ATornadoPawn::AffectNearbyObjects()
 {
     FVector TornadoLocation = GetActorLocation();
-    TornadoStrength *= CurrentSize; //scale strength w/ size
+    //TornadoStrength *= CurrentSize; //scale strength w/ size
 
     TArray<AActor*> OverlappingActors;
     TornadoCollision->GetOverlappingActors(OverlappingActors, ATornadoPhysicsObject::StaticClass());
@@ -243,16 +243,23 @@ void ATornadoPawn::AffectNearbyObjects()
         if (PhysicsObject)
         {
             PhysicsObject->ApplyTornadoForce(TornadoLocation, TornadoStrength);
-            ObjectsHit++;
-            if (ObjectsHit >= GrowthThreshold)
+            if (PhysicsObject->bCausesGrowth &&  !PhysicsObject->HasBeenCounted())
             {
-                GrowTornado();
-                ObjectsHit = 0; // reset counter
+                ObjectsHit++;
+                PhysicsObject->SetHasBeenCounted();
+                
+                if (ObjectsHit >= GrowthThreshold)
+                {
+                    GrowTornado();
+                    ObjectsHit = 0; // reset counter
+                }
             }
-            UE_LOG(LogTemp, Warning, TEXT("Applying force to %s"), *PhysicsObject->GetName());
             
+            UE_LOG(LogTemp, Warning, TEXT("Applying force to %s"), *PhysicsObject->GetName());
         }
+        
         DetectNearMiss(PhysicsObject);
+        
     }
 }
 
@@ -286,7 +293,7 @@ void ATornadoPawn::GrowTornado()
 }
 
 
-// =================== SCORING SYSTEM ===================
+// Scoring System
 
 void ATornadoPawn::DetectNearMiss(AActor* Object)
 {
@@ -298,6 +305,10 @@ void ATornadoPawn::DetectNearMiss(AActor* Object)
         UE_LOG(LogTemp, Warning, TEXT("Near miss with %s! +50 points"), *Object->GetName());
     }
 }
+
+
+
+// Blueprints controls
 
 void ATornadoPawn::SetGrowthSettings(float NewMultiplier, float NewThreshold, float NewMaxSize)
 {
