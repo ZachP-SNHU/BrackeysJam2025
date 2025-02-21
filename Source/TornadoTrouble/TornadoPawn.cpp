@@ -85,10 +85,7 @@ void ATornadoPawn::Tick(float DeltaTime)
     MovementComponent->MaxSpeed = FMath::FInterpTo(MovementComponent->MaxSpeed, TargetMaxSpeed, DeltaTime, 3.0f);
     MovementComponent->Acceleration = FMath::FInterpTo(MovementComponent->Acceleration, TargetAcceleration, DeltaTime, 3.0f);
     DriftFactor = FMath::FInterpTo(DriftFactor, TargetDrift, DeltaTime, 3.0f);
-
-    //  Smoothly adjust collision radius
-   // float NewRadius = FMath::FInterpTo(TornadoCollision->GetScaledSphereRadius(), TargetCollisionRadius, DeltaTime, 3.0f);
-   // TornadoCollision->SetSphereRadius(NewRadius);
+    
     
     // Boost Logic
     float CurrentTime = GetWorld()->GetTimeSeconds();
@@ -140,6 +137,7 @@ void ATornadoPawn::Tick(float DeltaTime)
     SpringArm->SetRelativeRotation(SmoothedRotation);
 
     AffectNearbyObjects();
+    
 }
 
 
@@ -265,7 +263,7 @@ void ATornadoPawn::GrowTornado()
 void ATornadoPawn::AffectNearbyObjects()
 {
     FVector TornadoLocation = GetActorLocation();
-    //TornadoStrength *= CurrentSize; //scale strength w/ size
+    TornadoStrength *= CurrentSize; //scale strength w/ size
 
     TArray<AActor*> OverlappingActors;
     TornadoCollision->GetOverlappingActors(OverlappingActors, ATornadoPhysicsObject::StaticClass());
