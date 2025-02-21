@@ -35,6 +35,10 @@ public:
 	void GrowTornado();
 	void DetectNearMiss(AActor* Object);
 
+	// input detection
+	bool bIsJumping;
+	bool bHasMoved = false; // Wait for player to make an input
+
 	// =================== COMPONENTS ===================
 	// Collision
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category="Collision")
@@ -54,19 +58,18 @@ public:
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category="Components")
 	class UCameraComponent* Camera;
-
+	
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Camera Settings")
+	float CameraFollowSpeed = 5.0f;
+	
 	// Movement Component
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category="Components")
 	class UFloatingPawnMovement* MovementComponent;
 
-	// =================== CAMERA SETTINGS ===================
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Camera Settings")
-	float CameraFollowSpeed = 5.0f;
-
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Camera Settings")
 	float CameraLateralOffset = 100.0f;
 	
-	// =================== MOVEMENT PROPERTIES ===================
+	// movement properties
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Tornado Properties")
 	float Friction = 2.0f;
 
@@ -84,7 +87,7 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Tornado Properties")
 	float NearMissDistance;
 
-	// =================== BOOST PROPERTIES ===================
+	// boost properties
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Boost")
 	float BoostMultiplier = 2.0f;
 	
@@ -121,12 +124,8 @@ public:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Growth")
 	float CurrentSize = 1.0f;
-	
-	// =================== JUMP & INPUT TRACKING ===================
-	bool bIsJumping;
-	bool bHasMoved = false; // Wait for player to make an input
 
-	// =================== SCORING SYSTEM ===================
+	// scoring
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category="Scoring")
 	float DestructionScore = 0.0f;
 

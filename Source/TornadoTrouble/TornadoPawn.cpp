@@ -2,6 +2,7 @@
 
 #include "TornadoPawn.h"
 #include "TornadoPhysicsObject.h"
+#include "Blueprint/UserWidget.h"
 #include "GameFramework/SpringArmComponent.h"
 #include "Camera/CameraComponent.h"
 #include "Components/SphereComponent.h"
@@ -141,6 +142,7 @@ void ATornadoPawn::Tick(float DeltaTime)
     AffectNearbyObjects();
 }
 
+
 // Input Handling
 
 void ATornadoPawn::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
@@ -167,6 +169,8 @@ void ATornadoPawn::MoveRight(float Value)
 
     MoveDirection.Y = Value;
 }
+
+
 
 // Movement System
 
@@ -309,6 +313,7 @@ void ATornadoPawn::DetectNearMiss(AActor* Object)
         UE_LOG(LogTemp, Warning, TEXT("Near miss with %s! +50 points"), *Object->GetName());
     }
 }
+
 
 
 
