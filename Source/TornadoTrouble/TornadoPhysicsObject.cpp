@@ -2,7 +2,6 @@
 
 
 #include "TornadoPhysicsObject.h"
-
 #include "TornadoPawn.h"
 #include "Components/StaticMeshComponent.h"
 #include "GameFramework/Actor.h"
@@ -15,19 +14,19 @@ ATornadoPhysicsObject::ATornadoPhysicsObject()
 
 	ObjectMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("ObjectMesh"));
 	RootComponent = ObjectMesh;
-
 	ObjectMesh->SetSimulatePhysics(true);
+	ObjectMesh->SetEnableGravity(true);
 	ObjectMesh->SetCollisionEnabled(ECollisionEnabled::QueryAndPhysics);
 	ObjectMesh->SetCollisionObjectType(ECC_PhysicsBody);
-	ObjectMesh->SetEnableGravity(true);
-	ObjectMesh->SetMassOverrideInKg(NAME_None, ObjectMass);
-	
 }
 
 // Called when the game starts or when spawned
 void ATornadoPhysicsObject::BeginPlay()
 {
 	Super::BeginPlay();
+
+
+	ObjectMesh->SetMassOverrideInKg(NAME_None, ObjectMass);
 	
 }
 
@@ -51,7 +50,7 @@ void ATornadoPhysicsObject::ApplyTornadoForce(FVector TornadoLocation, float Tor
 	ForceDirection.Normalize();
 
 	FVector AppliedForce = ForceDirection * TornadoStrength * LiftForce;
-	AppliedForce.Z += TornadoStrength * 200.0f;
+	AppliedForce.Z += TornadoStrength * 100.0f;
 
 	ObjectMesh->AddForce(AppliedForce * ObjectMesh->GetMass());
 

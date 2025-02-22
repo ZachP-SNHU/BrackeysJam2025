@@ -9,7 +9,6 @@
 #include "GameFramework/FloatingPawnMovement.h"
 #include "Components/SkeletalMeshComponent.h"
 #include "Components/StaticMeshComponent.h"
-#include "Blueprint/UserWidget.h"
 #include "Kismet/GameplayStatics.h"
 
 // THIS is the constructor vvvvv
@@ -22,13 +21,19 @@ ATornadoPawn::ATornadoPawn()
     TornadoCollision = CreateDefaultSubobject<USphereComponent>(TEXT("TornadoCollision"));
     RootComponent = TornadoCollision;
     TornadoCollision->SetSphereRadius(150.0f);
-    BaseNearMissDistance = TornadoCollision->GetScaledSphereRadius() + 100.0f;
     TornadoCollision->SetCollisionEnabled(ECollisionEnabled::QueryAndPhysics);
     TornadoCollision->SetCollisionObjectType(ECC_Pawn);
     TornadoCollision->SetCollisionResponseToAllChannels(ECR_Block);  // Block everything by default
     TornadoCollision->SetCollisionResponseToChannel(ECC_PhysicsBody, ECR_Overlap);  // Overlap physics objects
     TornadoCollision->SetCollisionResponseToChannel(ECC_Visibility, ECR_Ignore);
-    
+   /* if (!HasAnyFlags(RF_ClassDefaultObject))
+    {
+        TornadoCollision->SetCollisionEnabled(ECollisionEnabled::QueryAndPhysics);
+        TornadoCollision->SetCollisionObjectType(ECC_Pawn);
+        TornadoCollision->SetCollisionResponseToAllChannels(ECR_Block);  // Block everything by default
+        TornadoCollision->SetCollisionResponseToChannel(ECC_PhysicsBody, ECR_Overlap);  // Overlap physics objects
+        TornadoCollision->SetCollisionResponseToChannel(ECC_Visibility, ECR_Ignore);
+    }*/
     // skele mesh
     TornadoMesh = CreateDefaultSubobject<USkeletalMeshComponent>("TornadoMesh");
     TornadoMesh->SetupAttachment(TornadoCollision);
@@ -65,6 +70,7 @@ void ATornadoPawn::BeginPlay()
     TargetAcceleration = MovementComponent->Acceleration;
     TargetDrift = DriftFactor;
     TargetCollisionRadius = TornadoCollision->GetUnscaledSphereRadius();
+    BaseNearMissDistance = TornadoCollision->GetScaledSphereRadius() + 100.0f;
     
 }
 

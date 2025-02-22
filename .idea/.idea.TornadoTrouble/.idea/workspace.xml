@@ -14,13 +14,17 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="c6817037-fc48-479b-9503-40c35ede15bc" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/Content/Character/Tornado_BP.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Character/Tornado_BP.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Levels/TestLevel.umap" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Levels/TestLevel.umap" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/UI/Widgets/GameOver_W.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/UI/Widgets/GameOver_W.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.TornadoTrouble/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.TornadoTrouble/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Config/DefaultEngine.ini" beforeDir="false" afterPath="$PROJECT_DIR$/Config/DefaultEngine.ini" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Config/DefaultGame.ini" beforeDir="false" afterPath="$PROJECT_DIR$/Config/DefaultGame.ini" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Objects/Chair_BP.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Objects/Chair_BP.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Objects/Table_BP.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Objects/Table_BP.uasset" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Content/UI/Widgets/LevelComplete_W.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/UI/Widgets/LevelComplete_W.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/UI/Widgets/MainMenu_W.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/UI/Widgets/MainMenu_W.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/UI/Widgets/PauseMenu_W.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/UI/Widgets/PauseMenu_W.uasset" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Content/UI/Widgets/PlayerUI_W.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/UI/Widgets/PlayerUI_W.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/TornadoTrouble/TornadoPawn.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/TornadoTrouble/TornadoPawn.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/TornadoTrouble/TornadoPawn.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/TornadoTrouble/TornadoPawn.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/TornadoTrouble/TornadoPhysicsObject.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/TornadoTrouble/TornadoPhysicsObject.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/TornadoTrouble/TornadoTrouble.Build.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Source/TornadoTrouble/TornadoTrouble.Build.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -34,10 +38,12 @@
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="HighlightingSettingsPerFile">
-    <setting file="file://$PROJECT_DIR$/Source/TornadoTrouble/TTGameMode.cpp" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Source/TornadoTrouble/TTGameMode.h" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Source/TornadoTrouble/TornadoPawn.cpp" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Source/TornadoTrouble/TornadoPawn.h" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Source/TornadoTrouble/TornadoPhysicsObject.cpp" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Source/TornadoTrouble/TornadoPhysicsObject.h" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Source/TornadoTrouble/TornadoTroubleGameMode.cpp" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Source/TornadoTrouble/TornadoTroubleGameMode.h" root0="FORCE_HIGHLIGHTING" />
   </component>
   <component name="MetaFilesCheckinStateConfiguration" checkMetaFiles="true" />
   <component name="ProjectColorInfo">{
@@ -54,7 +60,7 @@
     &quot;C/C++ Project.TornadoTrouble.executor&quot;: &quot;Run&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;Score-UI&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
     &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
@@ -197,6 +203,9 @@
       <workItem from="1740163015364" duration="6473000" />
       <workItem from="1740188371418" duration="4227000" />
       <workItem from="1740200452170" duration="879000" />
+      <workItem from="1740242427693" duration="1220000" />
+      <workItem from="1740244182676" duration="3778000" />
+      <workItem from="1740247994768" duration="671000" />
     </task>
     <servers />
   </component>

@@ -163,7 +163,7 @@ public:
 	float CalculateDynamicPenalty(ATornadoPhysicsObject* Object);
 	
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Scoring|NearMiss")
-	float BaseNearMissDistance;
+	float BaseNearMissDistance = 200.0f;
 	//final score
 	UFUNCTION(BlueprintCallable, Category = "Scoring")
 	float CalculateFinalScore(float TimeMultiplier = 10.0f) const;
