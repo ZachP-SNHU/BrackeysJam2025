@@ -3,8 +3,11 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "Components/SphereComponent.h"
 #include "GameFramework/Pawn.h"
+#include "TornadoPhysicsObject.h"
 #include "TornadoPawn.generated.h"
+
 
 UCLASS()
 class TORNADOTROUBLE_API ATornadoPawn : public APawn
@@ -33,7 +36,10 @@ public:
 	void StartBoost();
 	void AffectNearbyObjects();
 	void GrowTornado();
-	void DetectNearMiss(AActor* Object);
+
+	// input detection
+	bool bIsJumping;
+	bool bHasMoved = false; // Wait for player to make an input
 
 	// =================== COMPONENTS ===================
 	// Collision
@@ -54,19 +60,18 @@ public:
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category="Components")
 	class UCameraComponent* Camera;
-
+	
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Camera Settings")
+	float CameraFollowSpeed = 5.0f;
+	
 	// Movement Component
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category="Components")
 	class UFloatingPawnMovement* MovementComponent;
 
-	// =================== CAMERA SETTINGS ===================
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Camera Settings")
-	float CameraFollowSpeed = 5.0f;
-
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Camera Settings")
 	float CameraLateralOffset = 100.0f;
 	
-	// =================== MOVEMENT PROPERTIES ===================
+	// movement properties
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Tornado Properties")
 	float Friction = 2.0f;
 
@@ -79,12 +84,9 @@ public:
 	// Strength
 	
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Tornado Properties")
-	float TornadoStrength = 1000.0f;
+	float TornadoStrength = 850.0f;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Tornado Properties")
-	float NearMissDistance;
-
-	// =================== BOOST PROPERTIES ===================
+	// boost properties
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Boost")
 	float BoostMultiplier = 2.0f;
 	
@@ -121,22 +123,6 @@ public:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Growth")
 	float CurrentSize = 1.0f;
-	
-	// =================== JUMP & INPUT TRACKING ===================
-	bool bIsJumping;
-	bool bHasMoved = false; // Wait for player to make an input
-
-	// =================== SCORING SYSTEM ===================
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category="Scoring")
-	float DestructionScore = 0.0f;
-
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category="Scoring")
-	float TimeScore = 0.0f;
-
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category="Scoring")
-	float NearMissBonus = 0.0f;
-
-	float StartTime;
 
 	// Blueprint callable functions
 
@@ -147,9 +133,68 @@ public:
 	void SetBoostSettings(float NewMultiplier, float NewDuration, float NewCooldown);
 
 	UFUNCTION(BlueprintCallable, Category="Tornado Strength")
-	void SetTornadoStrength(float NewStrength, float NewCollisionRadius, float NewNearMissDistance = -1.0f);
+	void SetTornadoStrength(float NewStrength, float NewCollisionRadius);
 
 	UFUNCTION(BlueprintCallable, Category="Tornado Movement")
 	void SetTornadoMovement(float NewMaxSpeed, float NewAcceleration, float NewDeceleration, float NewTurningBoost, float NewFriction, float NewDriftFactor);
+
+	// Timer
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Scoring")
+	float LevelTime = 120.0f;  // Default 2 minutes (editable per level)
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Scoring")
+	bool bLevelFailed = false;
+
+	UFUNCTION(BlueprintCallable, Category = "Scoring")
+	FString GetFormattedTime() const;
+
+	// Scoring Variables
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Scoring")
+	float LevelScore = 0.0f;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Scoring")
+	float NearMissBonusValue = 50.0f;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Scoring")
+	float CollisionPenaltyBase = -50.0f;
+
+	void AddNearMissBonus();
+	void AddCollisionPenalty(float PenaltyAmount);
+	float CalculateDynamicPenalty(ATornadoPhysicsObject* Object);
+	
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Scoring|NearMiss")
+	float BaseNearMissDistance;
+	//final score
+	UFUNCTION(BlueprintCallable, Category = "Scoring")
+	float CalculateFinalScore(float TimeMultiplier = 10.0f) const;
+	
+	UFUNCTION(BlueprintImplementableEvent, Category="Scoring")
+	void TriggerFailState();
+
+	// Final near miss distance after scaling
+	float CurrentNearMissDistance;
+
+	
+
+	// score system
+	UFUNCTION(BlueprintCallable, Category = "Scoring")
+	void DetectNearMiss(AActor* Object);
+	
+	// Near Miss Tracking
+	UPROPERTY()
+	TSet<AActor*> NearMissedObjects;
+
+	
 	
 };
+
+inline float ATornadoPawn::CalculateFinalScore(float TimeMultiplier) const
+{
+	float TimeBonus = LevelTime * TimeMultiplier;
+	float RawFinalScore = TimeBonus + LevelScore;
+	int32 FinalScore = FMath::FloorToInt(RawFinalScore);
+	
+
+
+	return static_cast<float>(FinalScore);
+}
