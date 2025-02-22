@@ -9,6 +9,8 @@
 #include "GameFramework/FloatingPawnMovement.h"
 #include "Components/SkeletalMeshComponent.h"
 #include "Components/StaticMeshComponent.h"
+#include "Blueprint/UserWidget.h"
+#include "Kismet/GameplayStatics.h"
 
 // THIS is the constructor vvvvv
 
@@ -20,6 +22,7 @@ ATornadoPawn::ATornadoPawn()
     TornadoCollision = CreateDefaultSubobject<USphereComponent>(TEXT("TornadoCollision"));
     RootComponent = TornadoCollision;
     TornadoCollision->SetSphereRadius(150.0f);
+    BaseNearMissDistance = TornadoCollision->GetScaledSphereRadius() + 100.0f;
     TornadoCollision->SetCollisionEnabled(ECollisionEnabled::QueryAndPhysics);
     TornadoCollision->SetCollisionObjectType(ECC_Pawn);
     TornadoCollision->SetCollisionResponseToAllChannels(ECR_Block);  // Block everything by default
@@ -68,6 +71,20 @@ void ATornadoPawn::BeginPlay()
 void ATornadoPawn::Tick(float DeltaTime)
 {
     Super::Tick(DeltaTime);
+
+    // Countdown Timer
+    if (!bLevelFailed)
+    {
+        LevelTime -= DeltaTime;
+        if (LevelTime <= 0.0f)
+        {
+            LevelTime = 0.0f;
+            bLevelFailed = true;
+            UE_LOG(LogTemp, Warning, TEXT("Level Failed: Timer Reached 0"));
+            TriggerFailState();
+        }
+    }
+
 
     FVector NewScale = FMath::VInterpTo(GetActorScale3D(), FVector(TargetSize), DeltaTime, 3.0f);
     SetActorScale3D(NewScale);
@@ -165,7 +182,6 @@ void ATornadoPawn::MoveRight(float Value)
 }
 
 
-
 // Movement System
 
 void ATornadoPawn::ApplyDrift(float DeltaTime)
@@ -254,12 +270,28 @@ void ATornadoPawn::GrowTornado()
     }
 }
 
+
+void ATornadoPawn::DetectNearMiss(AActor* Object)
+{
+    if (!Object) return;
+
+    float Distance = FVector::Dist(GetActorLocation(), Object->GetActorLocation());
+
+    if (Distance <= CurrentNearMissDistance && !NearMissedObjects.Contains(Object))
+    {
+        NearMissedObjects.Add(Object);
+        AddNearMissBonus();
+
+        UE_LOG(LogTemp, Warning, TEXT("Near Miss Detected with %s (+%f points)"), *Object->GetName(), NearMissBonusValue);
+    }
+}
+
 // physics interactions
 
 void ATornadoPawn::AffectNearbyObjects()
 {
     FVector TornadoLocation = GetActorLocation();
-    TornadoStrength *= CurrentSize; //scale strength w/ size
+    TornadoStrength = TornadoStrength * CurrentSize; //scale strength w/ size
 
     TArray<AActor*> OverlappingActors;
     TornadoCollision->GetOverlappingActors(OverlappingActors, ATornadoPhysicsObject::StaticClass());
@@ -277,6 +309,7 @@ void ATornadoPawn::AffectNearbyObjects()
             {
                 ObjectsHit++;
                 PhysicsObject->SetHasBeenCounted();
+                AddCollisionPenalty(CalculateDynamicPenalty(PhysicsObject));
                 UE_LOG(LogTemp, Warning, TEXT("Growth Object Hit Count: %d / %d"), ObjectsHit, GrowthThreshold);
 
                 if (ObjectsHit >= GrowthThreshold)
@@ -285,30 +318,39 @@ void ATornadoPawn::AffectNearbyObjects()
                     ObjectsHit = 0; // Reset counter after growth attempt
                 }
             }
-            
+            DetectNearMiss(PhysicsObject);
             UE_LOG(LogTemp, Warning, TEXT("Applying force to %s"), *PhysicsObject->GetName());
         }
-
-        
-        DetectNearMiss(PhysicsObject);
-        
     }
 }
 
 // Scoring System
 
-void ATornadoPawn::DetectNearMiss(AActor* Object)
+FString ATornadoPawn::GetFormattedTime() const
 {
-    float Distance = FVector::Dist(Object->GetActorLocation(), GetActorLocation());
-
-    if (Distance < NearMissDistance) 
-    {
-        UE_LOG(LogTemp, Warning, TEXT("Near miss with %s! +50 points"), *Object->GetName());
-    }
+    int32 Minutes = FMath::FloorToInt(LevelTime / 60);
+    int32 Seconds = FMath::FloorToInt(LevelTime) % 60;
+    return FString::Printf(TEXT("%d:%02d"), Minutes, Seconds);
 }
 
+void ATornadoPawn::AddNearMissBonus()
+{
+    LevelScore += NearMissBonusValue;
+    UE_LOG(LogTemp, Warning, TEXT("Near Miss! +%f Points | Total Score: %f"), NearMissBonusValue, LevelScore);
+}
 
+void ATornadoPawn::AddCollisionPenalty(float PenaltyAmount)
+{
+    LevelScore += PenaltyAmount;  // PenaltyAmount should be negative
+    UE_LOG(LogTemp, Warning, TEXT("Collision Penalty: %f | Total Score: %f"), PenaltyAmount, LevelScore);
+}
 
+float ATornadoPawn::CalculateDynamicPenalty(ATornadoPhysicsObject* Object)
+{
+    float RequiredForce = Object->LiftForce; // this returns a float
+    // for each 500 units of force, apply -50 points
+    return -50.0f * FMath::CeilToFloat(RequiredForce / 500.0f);
+}
 
 // Blueprints controls
 
@@ -330,21 +372,15 @@ void ATornadoPawn::SetBoostSettings(float NewMultiplier, float NewDuration, floa
     UE_LOG(LogTemp, Warning, TEXT("Boost Settings Updated: Multiplier = %f, Duration = %f, Cooldown = %f"), BoostMultiplier, BoostDuration, BoostCooldown);
 }
 
-void ATornadoPawn::SetTornadoStrength(float NewStrength, float NewCollisionRadius, float NewNearMissDistance)
+void ATornadoPawn::SetTornadoStrength(float NewStrength, float NewCollisionRadius)
 {
     TornadoStrength = NewStrength;
     TornadoCollision->SetSphereRadius(NewCollisionRadius);
 
-    if (NewNearMissDistance < 0)
-    {
-        NearMissDistance = NewCollisionRadius + 100;
-    }
-    else
-    {
-        NearMissDistance = NewNearMissDistance;
-    }
-    UE_LOG(LogTemp, Warning, TEXT("Tornado Strength Updated: Strength = %f, Collision Radius = %f, Near Miss Distance = %f"),
-       TornadoStrength, NewCollisionRadius, NearMissDistance);
+
+
+    UE_LOG(LogTemp, Warning, TEXT("Tornado Strength Updated: Strength = %f, Collision Radius = %f"),
+       TornadoStrength, NewCollisionRadius);
 }
 
 void ATornadoPawn::SetTornadoMovement(float NewMaxSpeed, float NewAcceleration, float NewDeceleration,

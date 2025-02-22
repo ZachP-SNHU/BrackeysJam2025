@@ -15,11 +15,15 @@
   <component name="ChangeListManager">
     <list default="true" id="c6817037-fc48-479b-9503-40c35ede15bc" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.TornadoTrouble/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.TornadoTrouble/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Character/Tornado_BP.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Character/Tornado_BP.uasset" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Content/Levels/TestLevel.umap" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Levels/TestLevel.umap" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Objects/Mesh/TrashCanMesh_Cylinder.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Objects/Mesh/TrashCanMesh_Cylinder.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Objects/New/DeskMesh.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/UI/Widgets/GameOver_W.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/UI/Widgets/GameOver_W.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/UI/Widgets/LevelComplete_W.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/UI/Widgets/LevelComplete_W.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/UI/Widgets/MainMenu_W.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/UI/Widgets/MainMenu_W.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/UI/Widgets/PlayerUI_W.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/UI/Widgets/PlayerUI_W.uasset" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Source/TornadoTrouble/TornadoPawn.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/TornadoTrouble/TornadoPawn.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Source/TornadoTrouble/TornadoPawn.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/TornadoTrouble/TornadoPawn.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/TornadoTrouble/TornadoPhysicsObject.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/TornadoTrouble/TornadoPhysicsObject.cpp" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -193,7 +197,8 @@
       <workItem from="1740087834343" duration="417000" />
       <workItem from="1740144550443" duration="5468000" />
       <workItem from="1740151604940" duration="1320000" />
-      <workItem from="1740163015364" duration="3793000" />
+      <workItem from="1740163015364" duration="6473000" />
+      <workItem from="1740188371418" duration="4227000" />
     </task>
     <servers />
   </component>
