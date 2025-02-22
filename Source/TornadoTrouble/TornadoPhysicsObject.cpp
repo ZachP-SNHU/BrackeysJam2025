@@ -38,12 +38,6 @@ void ATornadoPhysicsObject::Tick(float DeltaTime)
 
 	if (GetActorLocation().Z < OutOfBoundsHeight)
 	{
-		ATornadoPawn* Tornado = Cast<ATornadoPawn>(GetWorld()->GetFirstPlayerController()->GetPawn());
-		if (Tornado)
-		{
-			Tornado->DestructionScore += 50.0f;
-			UE_LOG(LogTemp, Warning, TEXT("%s fell off the map! -50 points"), *GetName())
-		}
 		Destroy();
 	}
 

@@ -54,7 +54,7 @@ ATornadoPawn::ATornadoPawn()
 void ATornadoPawn::BeginPlay()
 {
     Super::BeginPlay();
-    StartTime = GetWorld()->GetTimeSeconds();
+    
 
     // Set initial targets to current values
     TargetSize = CurrentSize;
@@ -129,10 +129,6 @@ void ATornadoPawn::Tick(float DeltaTime)
         DeltaTime,
         CameraFollowSpeed
     );
-
-    // Time Score Calculation
-    TimeScore = 10000.0f - ((GetWorld()->GetTimeSeconds() - StartTime) * 10.0f);
-    TimeScore = FMath::Max(TimeScore, 0.0f);
 
     SpringArm->SetRelativeRotation(SmoothedRotation);
 
@@ -307,7 +303,6 @@ void ATornadoPawn::DetectNearMiss(AActor* Object)
 
     if (Distance < NearMissDistance) 
     {
-        NearMissBonus += 50.0f;
         UE_LOG(LogTemp, Warning, TEXT("Near miss with %s! +50 points"), *Object->GetName());
     }
 }

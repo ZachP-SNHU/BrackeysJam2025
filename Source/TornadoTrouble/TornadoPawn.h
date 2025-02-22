@@ -125,18 +125,6 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Growth")
 	float CurrentSize = 1.0f;
 
-	// scoring
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category="Scoring")
-	float DestructionScore = 0.0f;
-
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category="Scoring")
-	float TimeScore = 0.0f;
-
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category="Scoring")
-	float NearMissBonus = 0.0f;
-
-	float StartTime;
-
 	// Blueprint callable functions
 
 	UFUNCTION(BlueprintCallable, Category="Growth")
