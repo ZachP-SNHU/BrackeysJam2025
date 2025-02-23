@@ -16,21 +16,8 @@
   <component name="ChangeListManager">
     <list default="true" id="c6817037-fc48-479b-9503-40c35ede15bc" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.TornadoTrouble/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.TornadoTrouble/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Config/DefaultGame.ini" beforeDir="false" afterPath="$PROJECT_DIR$/Config/DefaultGame.ini" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Audio/SFX/sfx_tornado_boost.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Audio/SFX/sfx_tornado_boost.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Audio/SFX/sfx_tornado_idle.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Audio/SFX/sfx_tornado_idle.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Character/Tornado_BP.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Character/Tornado_BP.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Levels/MainMenu_Map.umap" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Levels/MainMenu_Map.umap" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/LevelExit_BP.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/LevelExit_BP.uasset" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Content/Levels/OfficeLevel1.umap" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Levels/OfficeLevel1.umap" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Levels/OfficeLevel2.umap" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Levels/OfficeLevel2.umap" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Objects/Materials/Carpet_MAT.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Objects/Materials/Carpet_MAT.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/UI/Widgets/GameOver_W.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/UI/Widgets/GameOver_W.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/UI/Widgets/LevelComplete_W.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/UI/Widgets/LevelComplete_W.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/UI/Widgets/MainMenu_W.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/UI/Widgets/MainMenu_W.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/UI/Widgets/PauseMenu_W.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/UI/Widgets/PauseMenu_W.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/UI/Widgets/PlayerUI_W.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/UI/Widgets/PlayerUI_W.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/TornadoTrouble/TornadoPawn.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/TornadoTrouble/TornadoPawn.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/TornadoTrouble/TornadoPawn.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/TornadoTrouble/TornadoPawn.h" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -61,21 +48,21 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;C/C++ Project.TornadoTrouble.executor&quot;: &quot;Run&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;leveldesign&quot;,
-    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "C/C++ Project.TornadoTrouble.executor": "Run",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "git-widget-placeholder": "FinalTest",
+    "ignore.virus.scanning.warn.message": "true",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RunManager" selected="C/C++ Project.TornadoTrouble">
     <configuration name="TornadoTrouble" type="CppProject" factoryName="C++ Project">
       <configuration_1 setup="1">
@@ -233,6 +220,7 @@
       <workItem from="1740281103140" duration="1239000" />
       <workItem from="1740284673747" duration="784000" />
       <workItem from="1740287294043" duration="2472000" />
+      <workItem from="1740299427737" duration="474000" />
     </task>
     <servers />
   </component>
