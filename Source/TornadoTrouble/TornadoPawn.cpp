@@ -26,14 +26,7 @@ ATornadoPawn::ATornadoPawn()
     TornadoCollision->SetCollisionResponseToAllChannels(ECR_Block);  // Block everything by default
     TornadoCollision->SetCollisionResponseToChannel(ECC_PhysicsBody, ECR_Overlap);  // Overlap physics objects
     TornadoCollision->SetCollisionResponseToChannel(ECC_Visibility, ECR_Ignore);
-   /* if (!HasAnyFlags(RF_ClassDefaultObject))
-    {
-        TornadoCollision->SetCollisionEnabled(ECollisionEnabled::QueryAndPhysics);
-        TornadoCollision->SetCollisionObjectType(ECC_Pawn);
-        TornadoCollision->SetCollisionResponseToAllChannels(ECR_Block);  // Block everything by default
-        TornadoCollision->SetCollisionResponseToChannel(ECC_PhysicsBody, ECR_Overlap);  // Overlap physics objects
-        TornadoCollision->SetCollisionResponseToChannel(ECC_Visibility, ECR_Ignore);
-    }*/
+
     // skele mesh
     TornadoMesh = CreateDefaultSubobject<USkeletalMeshComponent>("TornadoMesh");
     TornadoMesh->SetupAttachment(TornadoCollision);
@@ -56,6 +49,9 @@ ATornadoPawn::ATornadoPawn()
 
     Camera = CreateDefaultSubobject<UCameraComponent>(TEXT("Camera"));
     Camera->SetupAttachment(SpringArm);
+
+    //SFX
+    BoostSound = CreateDefaultSubobject<USoundBase>(TEXT("BoostSound"));
     
 }
 
@@ -71,6 +67,7 @@ void ATornadoPawn::BeginPlay()
     TargetDrift = DriftFactor;
     TargetCollisionRadius = TornadoCollision->GetUnscaledSphereRadius();
     BaseNearMissDistance = TornadoCollision->GetScaledSphereRadius() + 100.0f;
+    UGameplayStatics::PrimeSound(BoostSound);
     
 }
 
@@ -117,6 +114,7 @@ void ATornadoPawn::Tick(float DeltaTime)
         MovementComponent->MaxSpeed /= BoostMultiplier;
         bIsBoosting = false;
         NextBoostTime = CurrentTime + BoostCooldown;
+        UGameplayStatics::PlaySound2D(GetWorld(), BoostSound, 0.6, 1, 0, NULL, NULL, true);
     }
 
     ApplyDrift(DeltaTime);
@@ -130,7 +128,7 @@ void ATornadoPawn::Tick(float DeltaTime)
         UE_LOG(LogTemp, Warning, TEXT("Blocked by: %s"), *HitResult.GetActor()->GetName());
         CurrentVelocity = FVector::ZeroVector;  // Stop on collision
     }
-    DrawDebugSphere(GetWorld(), GetActorLocation(), TornadoCollision->GetScaledSphereRadius(), 32, FColor::Red, false, -1.0f, 0, 2.0f);
+    //DrawDebugSphere(GetWorld(), GetActorLocation(), TornadoCollision->GetScaledSphereRadius(), 32, FColor::Red, false, -1.0f, 0, 2.0f);
 
     // Camera Adjustment
     FVector TornadoRight = GetActorRightVector();
@@ -297,7 +295,7 @@ void ATornadoPawn::DetectNearMiss(AActor* Object)
 void ATornadoPawn::AffectNearbyObjects()
 {
     FVector TornadoLocation = GetActorLocation();
-    TornadoStrength = TornadoStrength * CurrentSize; //scale strength w/ size
+   // TornadoStrength = TornadoStrength * CurrentSize; //scale strength w/ size
 
     TArray<AActor*> OverlappingActors;
     TornadoCollision->GetOverlappingActors(OverlappingActors, ATornadoPhysicsObject::StaticClass());

@@ -55,6 +55,8 @@ void ATornadoPhysicsObject::ApplyTornadoForce(FVector TornadoLocation, float Tor
 	ObjectMesh->AddForce(AppliedForce * ObjectMesh->GetMass());
 
 	ObjectMesh->SetPhysicsLinearVelocity(ObjectMesh->GetPhysicsLinearVelocity() * DragFactor);
+
+	CollisionSoundFX();
 	
 }
 

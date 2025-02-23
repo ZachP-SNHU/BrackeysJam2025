@@ -29,7 +29,7 @@ public:
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
-	// =================== MOVEMENT & INPUT ===================
+	// Movement + input
 	void MoveForward(float Value);
 	void MoveRight(float Value);
 	void ApplyDrift(float DeltaTime);
@@ -41,7 +41,10 @@ public:
 	bool bIsJumping;
 	bool bHasMoved = false; // Wait for player to make an input
 
-	// =================== COMPONENTS ===================
+	// Components
+	UPROPERTY(EditDefaultsOnly, Category = "SFX")
+	class USoundBase* BoostSound;
+	
 	// Collision
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category="Collision")
 	class USphereComponent* TornadoCollision;

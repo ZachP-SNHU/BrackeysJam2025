@@ -23,10 +23,10 @@ public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category="Physics Properties")
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category="Objects")
 	class UStaticMeshComponent* ObjectMesh;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Physics Properties")
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Objects")
 	bool bCausesGrowth = true;
 
 	bool HasBeenCounted() const
@@ -36,16 +36,16 @@ public:
 
 	void SetHasBeenCounted() { bHasbeenCounted = true; }
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Physics Properties")
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Objects")
 	float LiftForce = 500.0f;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Physics Properties")
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Objects")
 	float DragFactor = 0.95f;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Physics Properties")
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Objects")
 	float ObjectMass = 50.0f;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Physics Properties")
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Objects")
 	bool bIsDestructible = false;
 
 	void ApplyTornadoForce(FVector TornadoLocation,float TornadoStrength);
@@ -56,6 +56,8 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Scoring")
 	float OutOfBoundsHeight = -1000.0f;
 
+	UFUNCTION(BlueprintImplementableEvent)
+	void CollisionSoundFX();
 
 private:
 	bool bHasbeenCounted;

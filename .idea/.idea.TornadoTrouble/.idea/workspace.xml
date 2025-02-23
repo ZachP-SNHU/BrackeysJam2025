@@ -6,6 +6,7 @@
     <projectFile kind="Docker">../../../../../../../Program Files/Epic Games/UE_5.4/Engine/Source/Programs/Shared/EpicGames.Perforce.Fixture/EpicGames.Perforce.Fixture.csproj</projectFile>
     <projectFile>../../../../../../../Program Files/Epic Games/UE_5.4/Engine/Source/Programs/UnrealBuildTool/UnrealBuildTool.csproj</projectFile>
     <projectFile kind="Docker">../../../Program Files/Epic Games/UE_5.4/Engine/Source/Programs/Shared/EpicGames.Perforce.Fixture/EpicGames.Perforce.Fixture.csproj</projectFile>
+    <projectFile kind="Docker">../Program Files/Epic Games/UE_5.4/Engine/Source/Programs/Shared/EpicGames.Perforce.Fixture/EpicGames.Perforce.Fixture.csproj</projectFile>
     <projectFile>Intermediate/ProjectFiles/TornadoTrouble.vcxproj</projectFile>
     <projectFile>Intermediate/ProjectFiles/UE5.vcxproj</projectFile>
   </component>
@@ -15,16 +16,21 @@
   <component name="ChangeListManager">
     <list default="true" id="c6817037-fc48-479b-9503-40c35ede15bc" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.TornadoTrouble/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.TornadoTrouble/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Config/DefaultEngine.ini" beforeDir="false" afterPath="$PROJECT_DIR$/Config/DefaultEngine.ini" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Config/DefaultGame.ini" beforeDir="false" afterPath="$PROJECT_DIR$/Config/DefaultGame.ini" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Objects/Chair_BP.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Objects/Chair_BP.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Objects/Table_BP.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Objects/Table_BP.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Audio/SFX/sfx_tornado_boost.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Audio/SFX/sfx_tornado_boost.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Audio/SFX/sfx_tornado_idle.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Audio/SFX/sfx_tornado_idle.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Character/Tornado_BP.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Character/Tornado_BP.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Levels/MainMenu_Map.umap" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Levels/MainMenu_Map.umap" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Levels/OfficeLevel1.umap" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Levels/OfficeLevel1.umap" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Levels/OfficeLevel2.umap" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Levels/OfficeLevel2.umap" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Objects/Materials/Carpet_MAT.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Objects/Materials/Carpet_MAT.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/UI/Widgets/GameOver_W.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/UI/Widgets/GameOver_W.uasset" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Content/UI/Widgets/LevelComplete_W.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/UI/Widgets/LevelComplete_W.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/UI/Widgets/MainMenu_W.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/UI/Widgets/MainMenu_W.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/UI/Widgets/PauseMenu_W.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/UI/Widgets/PauseMenu_W.uasset" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Content/UI/Widgets/PlayerUI_W.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/UI/Widgets/PlayerUI_W.uasset" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Source/TornadoTrouble/TornadoPawn.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/TornadoTrouble/TornadoPawn.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Source/TornadoTrouble/TornadoPawn.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/TornadoTrouble/TornadoPawn.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/TornadoTrouble/TornadoPhysicsObject.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/TornadoTrouble/TornadoPhysicsObject.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/TornadoTrouble/TornadoTrouble.Build.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Source/TornadoTrouble/TornadoTrouble.Build.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -60,7 +66,7 @@
     &quot;C/C++ Project.TornadoTrouble.executor&quot;: &quot;Run&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;leveldesign&quot;,
     &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
@@ -161,6 +167,17 @@
       <EXTENSION ID="com.jetbrains.rider.docker.debug" isFastModeEnabled="true" isSslEnabled="false" />
       <method v="2" />
     </configuration>
+    <configuration name="EpicGames.Perforce.Fixture/Dockerfile (2)" type="docker-deploy" factoryName="dockerfile" server-name="Docker">
+      <deployment type="dockerfile">
+        <settings>
+          <option name="containerName" value="epicgames.perforce.fixture" />
+          <option name="contextFolderPath" value="C:\BrackeysJam2025" />
+          <option name="sourceFilePath" value="../Program Files/Epic Games/UE_5.4/Engine/Source/Programs/Shared/EpicGames.Perforce.Fixture/Dockerfile" />
+        </settings>
+      </deployment>
+      <EXTENSION ID="com.jetbrains.rider.docker.debug" isFastModeEnabled="true" isSslEnabled="false" />
+      <method v="2" />
+    </configuration>
     <configuration name="EpicGames.Perforce.Fixture/Dockerfile" type="docker-deploy" factoryName="dockerfile" server-name="Docker">
       <deployment type="dockerfile">
         <settings>
@@ -206,6 +223,16 @@
       <workItem from="1740242427693" duration="1220000" />
       <workItem from="1740244182676" duration="3778000" />
       <workItem from="1740247994768" duration="671000" />
+      <workItem from="1740248743215" duration="2344000" />
+      <workItem from="1740255872902" duration="205000" />
+      <workItem from="1740256152943" duration="1382000" />
+      <workItem from="1740259139220" duration="1384000" />
+      <workItem from="1740266111672" duration="1359000" />
+      <workItem from="1740267974524" duration="1737000" />
+      <workItem from="1740276124763" duration="1570000" />
+      <workItem from="1740281103140" duration="1239000" />
+      <workItem from="1740284673747" duration="784000" />
+      <workItem from="1740287294043" duration="2472000" />
     </task>
     <servers />
   </component>
