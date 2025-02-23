@@ -49,6 +49,9 @@ ATornadoPawn::ATornadoPawn()
 
     Camera = CreateDefaultSubobject<UCameraComponent>(TEXT("Camera"));
     Camera->SetupAttachment(SpringArm);
+
+    //SFX
+    BoostSound = CreateDefaultSubobject<USoundBase>(TEXT("BoostSound"));
     
 }
 
@@ -64,6 +67,7 @@ void ATornadoPawn::BeginPlay()
     TargetDrift = DriftFactor;
     TargetCollisionRadius = TornadoCollision->GetUnscaledSphereRadius();
     BaseNearMissDistance = TornadoCollision->GetScaledSphereRadius() + 100.0f;
+    UGameplayStatics::PrimeSound(BoostSound);
     
 }
 
@@ -110,6 +114,7 @@ void ATornadoPawn::Tick(float DeltaTime)
         MovementComponent->MaxSpeed /= BoostMultiplier;
         bIsBoosting = false;
         NextBoostTime = CurrentTime + BoostCooldown;
+        UGameplayStatics::PlaySound2D(GetWorld(), BoostSound, 0.6, 1, 0, NULL, NULL, true);
     }
 
     ApplyDrift(DeltaTime);

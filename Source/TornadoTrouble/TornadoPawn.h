@@ -42,6 +42,9 @@ public:
 	bool bHasMoved = false; // Wait for player to make an input
 
 	// Components
+	UPROPERTY(EditDefaultsOnly, Category = "SFX")
+	class USoundBase* BoostSound;
+	
 	// Collision
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category="Collision")
 	class USphereComponent* TornadoCollision;
