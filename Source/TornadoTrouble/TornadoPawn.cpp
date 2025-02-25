@@ -258,9 +258,9 @@ void ATornadoPawn::GrowTornado()
 
         // Update target values for smooth interpolation
         TargetSize = CurrentSize * GrowthMultiplier;
-        TargetMaxSpeed = MovementComponent->MaxSpeed * 1.1f;  // increase speed by 10%
+        TargetMaxSpeed = MovementComponent->MaxSpeed * 1.05f;  // increase speed by 10%
         //TargetAcceleration = MovementComponent->Acceleration * 1.05f; // increase acceleration by 15%
-        TargetDrift = DriftFactor * 1.1f; // Increase drift by 10%
+        TargetDrift = DriftFactor * 1.05f; // Increase drift by 5%
         TargetCollisionRadius = TornadoCollision->GetUnscaledSphereRadius() * GrowthMultiplier;
 
         // 0.7-second delay before allowing next growth
