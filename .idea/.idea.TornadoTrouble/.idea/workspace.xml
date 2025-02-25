@@ -16,8 +16,10 @@
   <component name="ChangeListManager">
     <list default="true" id="c6817037-fc48-479b-9503-40c35ede15bc" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.TornadoTrouble/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.TornadoTrouble/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/LevelExit_BP.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/LevelExit_BP.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Levels/OfficeLevel1.umap" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Levels/OfficeLevel1.umap" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Character/Tornado_BP.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Character/Tornado_BP.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Levels/OfficeLevel2.umap" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Levels/OfficeLevel2.umap" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Levels/_GENERATED/Zaddy/Box_1248FF88.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Levels/_GENERATED/Zaddy/Box_1248FF88.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/TornadoTrouble/TornadoPawn.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/TornadoTrouble/TornadoPawn.cpp" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -48,21 +50,21 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;C/C++ Project.TornadoTrouble.executor&quot;: &quot;Run&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;FinalTest&quot;,
-    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "C/C++ Project.TornadoTrouble.executor": "Run",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "git-widget-placeholder": "bug-fixing",
+    "ignore.virus.scanning.warn.message": "true",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RunManager" selected="C/C++ Project.TornadoTrouble">
     <configuration name="TornadoTrouble" type="CppProject" factoryName="C++ Project">
       <configuration_1 setup="1">
@@ -221,6 +223,7 @@
       <workItem from="1740284673747" duration="784000" />
       <workItem from="1740287294043" duration="2472000" />
       <workItem from="1740299427737" duration="474000" />
+      <workItem from="1740440256529" duration="1689000" />
     </task>
     <servers />
   </component>
